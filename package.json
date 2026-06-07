@@ -1,0 +1,57 @@
+{
+    "name": "glsl-custom",
+    "displayName": "GLSL Custom",
+    "description": "Własne kolorowanie i IntelliSense dla GLSL",
+    "version": "0.0.1",
+    "main": "./extension.js",
+    "publisher": "ProgrammingStroms",
+
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "glsl",
+                "aliases": [
+                    "GLSL",
+                    "glsl"
+                ],
+                "extensions": [
+                    ".vert",
+                    ".frag",
+                    ".glsl",
+                    ".vs",
+                    ".fs"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "glsl",
+                "scopeName": "source.glsl",
+                "path": "./syntaxes/glsl.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "glsl",
+                "path": "./snippets/glsl-snippets.json"
+            }
+        ],
+        "configurationDefaults": {
+            "[glsl]": {
+                "editor.quickSuggestions": {
+                    "other": "on",
+                    "comments": "off",
+                    "strings": "off"
+                },
+                "editor.wordBasedSuggestions": "allDocuments"
+            }
+        }
+    }
+}

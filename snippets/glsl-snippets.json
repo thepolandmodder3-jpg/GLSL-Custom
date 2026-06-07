@@ -1,0 +1,317 @@
+{
+	"================ KWALIFIKATORY I BLOKI I/O ================": {},
+
+	"Layout Qualifier": {
+		"prefix": "layout",
+		"body": "layout(location = ${1:0}) in ${2:vec3} ${3:name};",
+		"description": "Definiowanie jawnego indeksu lokalizacji (Location) dla wejścia/wyjścia (GLSL 3.30+)"
+	},
+	"Uniform Buffer Object (Interface Block)": {
+		"prefix": "uniform block",
+		"body": [
+			"layout(std140) uniform ${1:BlockName} {",
+			"\t$0",
+			"} ${2:instanceName};"
+		],
+		"description": "Definicja bloku typu Uniform (UBO) do wydajnego dzielenia danych między shaderami"
+	},
+	"Shader Storage Buffer Object (SSBO)": {
+		"prefix": "buffer block",
+		"body": [
+			"layout(std430) buffer ${1:BufferName} {",
+			"\t$0",
+			"} ${2:instanceName};"
+		],
+		"description": "Blok bufora pamięci (SSBO) – pozwala na odczyt i zapis dużych struktur danych na GPU (GLSL 4.30+)"
+	},
+
+	"================ ZAAWANSOWANE INSTRUKCJE STERUJĄCE ================": {},
+
+	"For Loop": {
+		"prefix": "for",
+		"body": [
+			"for (int i = 0; i < ${1:count}; i++) {",
+			"\t$0",
+			"}"
+		],
+		"description": "Standardowa pętla for (w shaderach zaleca się stałą liczbę iteracji)"
+	},
+	"Switch Case": {
+		"prefix": "switch",
+		"body": [
+			"switch (${1:int_expression}) {",
+			"\tcase ${2:0}:",
+			"\t\t$3",
+			"\t\tbreak;",
+			"\tdefault:",
+			"\t\t$0",
+			"\t\tbreak;",
+			"}"
+		],
+		"description": "Instrukcja warunkowa wielokrotnego wyboru (Switch-Case)"
+	},
+
+	"================ METODY GEOMETRYCZNE I WEKTOROWE ================": {},
+
+	"Reflect": {
+		"prefix": "reflect",
+		"body": "reflect(${1:I}, ${2:N})",
+		"description": "Oblicza wektor odbicia. I = wektor padający (skierowany DO powierzchni), N = normalna (znormalizowana)"
+	},
+	"Refract": {
+		"prefix": "refract",
+		"body": "refract(${1:I}, ${2:N}, ${3:eta})",
+		"description": "Oblicza wektor załamania (refrakcji). eta = stosunek współczynników załamania światła"
+	},
+	"Faceforward": {
+		"prefix": "faceforward",
+		"body": "faceforward(${1:N}, ${2:I}, ${3:Nref})",
+		"description": "Odwraca wektor normalnej N, jeśli wektor padający I jest skierowany w tę samą stronę co Nref"
+	},
+	"Matrix Comp Mult": {
+		"prefix": "matrixCompMult",
+		"body": "matrixCompMult(${1:mat}, ${2:mat})",
+		"description": "Mnożenie macierzy element po elemencie (nie jest to klasyczne mnożenie algebraiczne macierzy)"
+	},
+	"Transpose Macierzy": {
+		"prefix": "transpose",
+		"body": "transpose(${1:matrix})",
+		"description": "Zwraca macierz transponowaną (zamienia wiersze z kolumnami)"
+	},
+	"Inverse Macierzy": {
+		"prefix": "inverse",
+		"body": "inverse(${1:matrix})",
+		"description": "Oblicza macierz odwrotną (bardzo kosztowne operacyjnie na GPU!)"
+	},
+	"Determinant": {
+		"prefix": "determinant",
+		"body": "determinant(${1:matrix})",
+		"description": "Oblicza wyznacznik macierzy kwadratowej"
+	},
+
+	"================ MATEMATYKA GLSL 4.00+ ================": {},
+
+	"Fused Multiply-Add (FMA)": {
+		"prefix": "fma",
+		"body": "fma(${1:a}, ${2:b}, ${3:c})",
+		"description": "Oblicza (a * b) + c w jednej operacji sprzętowej, bez utraty precyzji po drodze"
+	},
+	"Isnan": {
+		"prefix": "isnan",
+		"body": "isnan(${1:x})",
+		"description": "Zwraca true, jeśli podana wartość nie jest liczbą (NaN)"
+	},
+	"Isinf": {
+		"prefix": "isinf",
+		"body": "isinf(${1:x})",
+		"description": "Zwraca true, jeśli podana wartość jest nieskończonością (Infinity)"
+	},
+	"Trunc": {
+		"prefix": "trunc",
+		"body": "trunc(${1:x})",
+		"description": "Odrzuca część ułamkową liczby, zaokrąglając ją w stronę zera"
+	},
+	"RoundEven": {
+		"prefix": "roundEven",
+		"body": "roundEven(${1:x})",
+		"description": "Zaokrągla do najbliższej liczby całkowitej. Jeśli odległość wynosi dokładnie 0.5, zaokrągla do liczby parzystej"
+	},
+
+	"================ SPROWADZANIE DO STOPNI / RADIANÓW ================": {},
+
+	"Radians": { "prefix": "radians", "body": "radians(${1:degrees})", "description": "Konwertuje stopnie na radiany" },
+	"Degrees": { "prefix": "degrees", "body": "degrees(${1:radians})", "description": "Konwertuje radiany na stopnie" },
+
+	"================ ZAAWANSOWANE FUNKCJE TEKSTURALNE ================": {},
+
+	"TextureSize": {
+		"prefix": "textureSize",
+		"body": "textureSize(${1:sampler}, ${2:lod})",
+		"description": "Zwraca wymiary tekstury (szerokość, wysokość w pikselach) dla wybranego poziomu MIP-mapy (lod)"
+	},
+	"TextureQueryLod": {
+		"prefix": "textureQueryLod",
+		"body": "textureQueryLod(${1:sampler}, ${2:coord})",
+		"description": "Zwraca poziom MIP-mapy (LOD), który zostałby użyty do spróbkowania tekstury w danym punkcie"
+	},
+	"TexelFetch": {
+		"prefix": "texelFetch",
+		"body": "texelFetch(${1:sampler}, ${2:ivec}, ${3:lod})",
+		"description": "Pobiera pojedynczy teksel z tekstury przy użyciu bezpośrednich współrzędnych całkowitych (bez filtrowania)"
+	},
+
+	"================ ZMIENNE SYSTEMOWE VERTEX SHADERA (gl_*) ================": {},
+
+	"gl_VertexID": {
+		"prefix": "gl_VertexID",
+		"body": "gl_VertexID",
+		"description": "[Vertex Shader] Indeks aktualnie przetwarzanego wierzchołka (tylko do odczytu)."
+	},
+	"gl_InstanceID": {
+		"prefix": "gl_InstanceID",
+		"body": "gl_InstanceID",
+		"description": "[Vertex Shader] Indeks aktualnej instancji podczas renderowania instancjonowanego (tylko do odczytu)."
+	},
+	"gl_Position": {
+		"prefix": "gl_Position",
+		"body": "gl_Position = ${1:vec4};",
+		"description": "[Vertex Shader] [WYJŚCIE] Pozycja wierzchołka w przestrzeni obcinania (Clip Space). Musisz ją zapisać."
+	},
+	"gl_PointSize": {
+		"prefix": "gl_PointSize",
+		"body": "gl_PointSize = ${1:1.0};",
+		"description": "[Vertex Shader] [WYJŚCIE] Rozmiar renderowanego punktu w pikselach (używane tylko przy GL_POINTS)."
+	},
+	"gl_DrawID": {
+		"prefix": "gl_DrawID",
+		"body": "gl_DrawID",
+		"description": "[Vertex Shader] Indeks aktualnego wywołania rysowania w komendach typu MultiDraw (GLSL 4.60)."
+	},
+	"gl_BaseVertex": {
+		"prefix": "gl_BaseVertex",
+		"body": "gl_BaseVertex",
+		"description": "[Vertex Shader] Wartość parametru baseVertex przekazana do funkcji rysującej (GLSL 4.60)."
+	},
+	"gl_BaseInstance": {
+		"prefix": "gl_BaseInstance",
+		"body": "gl_BaseInstance",
+		"description": "[Vertex Shader] Wartość parametru baseInstance przekazana do funkcji rysującej (GLSL 4.60)."
+	},
+
+	"================ ZMIENNE SYSTEMOWE FRAGMENT SHADERA (gl_*) ================": {},
+
+	"gl_FragCoord": {
+		"prefix": "gl_FragCoord",
+		"body": "gl_FragCoord",
+		"description": "[Fragment Shader] Współrzędne okna (x, y, z, 1/w) aktualnego piksela (tylko do odczytu). x i y to pozycja na ekranie."
+	},
+	"gl_FrontFacing": {
+		"prefix": "gl_FrontFacing",
+		"body": "gl_FrontFacing",
+		"description": "[Fragment Shader] Zmienna boolowska. Zwraca true, jeśli piksel należy do przedniej ścianki trójkąta (Front Face)."
+	},
+	"gl_PointCoord": {
+		"prefix": "gl_PointCoord",
+		"body": "gl_PointCoord",
+		"description": "[Fragment Shader] Współrzędne dwuwymiarowe (0.0 do 1.0) wewnątrz renderowanego punktu (używane tylko przy GL_POINTS)."
+	},
+	"gl_FragDepth": {
+		"prefix": "gl_FragDepth",
+		"body": "gl_FragDepth = ${1:gl_FragCoord.z};",
+		"description": "[Fragment Shader] [WYJŚCIE] Pozwala ręcznie nadpisać wartość bufora głębi (Z-Buffer) dla bieżącego piksela."
+	},
+	"gl_PrimitiveID": {
+		"prefix": "gl_PrimitiveID",
+		"body": "gl_PrimitiveID",
+		"description": "[Fragment/Geometry Shader] Indeks aktualnie przetwarzanego prymitywu (np. trójkąta)."
+	},
+	"gl_SampleID": {
+		"prefix": "gl_SampleID",
+		"body": "gl_SampleID",
+		"description": "[Fragment Shader] Unikalny indeks aktualnego podpiksela podczas renderowania z Multi-Samplingiem (MSAA)."
+	},
+	"gl_SamplePosition": {
+		"prefix": "gl_SamplePosition",
+		"body": "gl_SamplePosition",
+		"description": "[Fragment Shader] Pozycja podpiksela (0.0 do 1.0) wewnątrz obszaru bieżącego piksela przy MSAA."
+	},
+	"gl_Layer": {
+		"prefix": "gl_Layer",
+		"body": "gl_Layer",
+		"description": "[Fragment Shader] Indeks warstwy tekstury tablicowej (Texture Array) lub Cubemapy, do której trafia piksel."
+	},
+	"gl_ViewportIndex": {
+		"prefix": "gl_ViewportIndex",
+		"body": "gl_ViewportIndex",
+		"description": "[Fragment Shader] Indeks rzutni (Viewportu), do której trafia bieżący piksel (przy użyciu wielu rzutni)."
+	},
+
+	"================ ZMIENNE DLA TESELACJI (Tessellation gl_*) ================": {},
+
+	"gl_TessLevelOuter": {
+		"prefix": "gl_TessLevelOuter",
+		"body": "gl_TessLevelOuter[${1:0}] = ${2:1.0};",
+		"description": "[Tessellation Control] [WYJŚCIE] Tablica określająca stopień podziału zewnętrznych krawędzi prymitywu (patcha)."
+	},
+	"gl_TessLevelInner": {
+		"prefix": "gl_TessLevelInner",
+		"body": "gl_TessLevelInner[${1:0}] = ${2:1.0};",
+		"description": "[Tessellation Control] [WYJŚCIE] Tablica określająca stopień podziału wnętrza prymitywu (patcha)."
+	},
+	"gl_TessCoord": {
+		"prefix": "gl_TessCoord",
+		"body": "gl_TessCoord",
+		"description": "[Tessellation Evaluation] Współrzędne barycentryczne (lub parametryczne UV) nowo wygenerowanego wierzchołka wewnątrz patcha."
+	},
+	"gl_PatchVerticesIn": {
+		"prefix": "gl_PatchVerticesIn",
+		"body": "gl_PatchVerticesIn",
+		"description": "[Tessellation Control/Evaluation] Liczba wierzchołków wejściowych w aktualnie przetwarzanym patchu."
+	},
+
+	"================ ZMIENNE DLA GEOMETRY SHADERA (Geometry gl_*) ================": {},
+
+	"gl_PrimitiveIDIn": {
+		"prefix": "gl_PrimitiveIDIn",
+		"body": "gl_PrimitiveIDIn",
+		"description": "[Geometry Shader] Indeks prymitywu wejściowego, generowany automatycznie przez procesor montażu prymitywów."
+	},
+	"gl_InvocationID": {
+		"prefix": "gl_InvocationID",
+		"body": "gl_InvocationID",
+		"description": "[Geometry/Tessellation Control] Indeks aktualnej instancji wykonania (wywołania) shadera dla tego samego prymitywu/patcha."
+	},
+	"EmitVertex Function": {
+		"prefix": "EmitVertex",
+		"body": "EmitVertex();",
+		"description": "[Geometry Shader] Funkcja systemowa. Emituje aktualne wartości zmiennych wyjściowych (w tym gl_Position) jako nowy wierzchołek."
+	},
+	"EndPrimitive Function": {
+		"prefix": "EndPrimitive",
+		"body": "EndPrimitive();",
+		"description": "[Geometry Shader] Funkcja systemowa. Kończy aktualnie generowany prymityw (np. pasek trójkątów) i zaczyna nowy."
+	},
+
+	"================ ZMIENNE DLA COMPUTE SHADERA (Compute gl_*) ================": {},
+
+	"gl_NumWorkGroups": {
+		"prefix": "gl_NumWorkGroups",
+		"body": "gl_NumWorkGroups",
+		"description": "[Compute Shader] Globalne wymiary siatki grup roboczych (Work Groups) przekazane w funkcji wywołującej glDispatchCompute."
+	},
+	"gl_WorkGroupID": {
+		"prefix": "gl_WorkGroupID",
+		"body": "gl_WorkGroupID",
+		"description": "[Compute Shader] Trójwymiarowy indeks aktualnej grupy roboczej, w której znajduje się ten wątek."
+	},
+	"gl_LocalInvocationID": {
+		"prefix": "gl_LocalInvocationID",
+		"body": "gl_LocalInvocationID",
+		"description": "[Compute Shader] Lokalny indeks wątku (współrzędne x, y, z) wewnątrz bieżącej grupy roboczej."
+	},
+	"gl_GlobalInvocationID": {
+		"prefix": "gl_GlobalInvocationID",
+		"body": "gl_GlobalInvocationID",
+		"description": "[Compute Shader] Unikalny, globalny indeks wątku w całej przestrzeni obliczeniowej (najważniejsza zmienna do mapowania danych!)."
+	},
+	"gl_LocalInvocationIndex": {
+		"prefix": "gl_LocalInvocationIndex",
+		"body": "gl_LocalInvocationIndex",
+		"description": "[Compute Shader] Jednowymiarowy (spłaszczony) indeks wątku wewnątrz grupy roboczej, przydatny do indeksowania pamięci shared."
+	},
+	"Compute Layout Configuration": {
+		"prefix": "layout compute",
+		"body": "layout(local_size_x = ${1:32}, local_size_y = ${2:32}, local_size_z = ${3:1}) in;",
+		"description": "[Compute Shader] Definicja rozmiaru lokalnej grupy roboczej (liczby wątków w trzech wymiarach XYZ)."
+	},
+	"Barrier Function": {
+		"prefix": "barrier",
+		"body": "barrier();",
+		"description": "[Compute/TessControl Shader] Synchronizacja wątków. Zmusza wszystkie wątki w grupie do poczekania na ten punkt przed dalszym wykonaniem kodu."
+	},
+	"MemoryBarrier Function": {
+		"prefix": "memoryBarrier",
+		"body": "memoryBarrier();",
+		"description": "[Compute Shader] Zapewnia, że wszystkie operacje zapisu do pamięci stały się widoczne dla innych wątków."
+	}
+}
